@@ -1,4 +1,5 @@
-import React, { useRef, useState, useMemo, useEffect } from 'react';
+import { useRef, useState, useMemo, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Marker, Popup } from 'react-leaflet';
 import MarkerPopup from '../../components/MarkerPopup';
 import useFetchAddress from '../../hook/useFetchAddress';
@@ -16,7 +17,13 @@ const DraggleMarker = ({ onAddRemark, selectedPosition }) => {
                 if (marker != null) {
                     const newPosition = marker.getLatLng();
                     setPosition(newPosition);
-                    marker.openPopup();
+                    marker.openPopup(); // Open popup on drag end
+                }
+            },
+            click() {
+                const marker = markerRef.current;
+                if (marker != null) {
+                    marker.openPopup(); // Open popup on marker click
                 }
             },
         }),
@@ -29,6 +36,7 @@ const DraggleMarker = ({ onAddRemark, selectedPosition }) => {
             const marker = markerRef.current;
             if (marker) {
                 marker.setLatLng(selectedPosition);
+                marker.openPopup(); // Open popup if a location is selected
             }
         }
     }, [selectedPosition]);
@@ -63,6 +71,15 @@ const DraggleMarker = ({ onAddRemark, selectedPosition }) => {
             </Popup>
         </Marker>
     );
+};
+
+// Add prop types validation
+DraggleMarker.propTypes = {
+    onAddRemark: PropTypes.func.isRequired,
+    selectedPosition: PropTypes.shape({
+        lat: PropTypes.number.isRequired,
+        lng: PropTypes.number.isRequired,
+    }),
 };
 
 export default DraggleMarker;

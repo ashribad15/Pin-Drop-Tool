@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-
 import MapLayout from './page/Map/MapLayout';
-import Sidebar from './components/SideBar';
+import Sidebar from './components/Sidebar'; // Ensure correct casing
 
 function App() {
   const [remarkHistory, setRemarkHistory] = useState([]);

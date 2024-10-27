@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
 import { RxHamburgerMenu, RxCross2 } from "react-icons/rx";
 import { SlLocationPin } from "react-icons/sl";
 
@@ -7,7 +7,7 @@ export default function Sidebar({ remarkHistory, onSelectRemark }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
-    setIsSidebarOpen((prev) => !prev); // Use functional update for state
+    setIsSidebarOpen((prev) => !prev);
   };
 
   return (
@@ -42,12 +42,12 @@ export default function Sidebar({ remarkHistory, onSelectRemark }) {
           <h2 className="font-bold">Remark History</h2>
           {remarkHistory.map((remark) => (
             <div
-              key={remark.id || remark.remark} // Use unique id if available
+              key={remark.id || remark.remark}
               className="p-2.5 my-2 flex items-center rounded-md duration-300 cursor-pointer hover:bg-blue-600 text-white"
               onClick={() => onSelectRemark(remark)}
-              role="button" // Improve accessibility
-              tabIndex={0} // Allow keyboard navigation
-              onKeyPress={(e) => e.key === 'Enter' && onSelectRemark(remark)} // Handle keyboard interaction
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => e.key === 'Enter' && onSelectRemark(remark)}
             >
               <SlLocationPin />
               <span className="text-[15px] ml-4">{remark.remark}</span>
@@ -59,13 +59,12 @@ export default function Sidebar({ remarkHistory, onSelectRemark }) {
   );
 }
 
-// Add prop types validation
 Sidebar.propTypes = {
   remarkHistory: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // assuming each remark has a unique id
-      remark: PropTypes.string.isRequired, // remark should be a string and is required
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      remark: PropTypes.string.isRequired,
     })
-  ).isRequired, // remarkHistory is required
-  onSelectRemark: PropTypes.func.isRequired, // onSelectRemark should be a function and is required
+  ).isRequired,
+  onSelectRemark: PropTypes.func.isRequired,
 };
